@@ -1,21 +1,33 @@
-// app.js
-function Welcome(props) {
-  return <h1>Hello {props.name}</h1>;
-}
-function UserProfile({name, age, location}){
+const cards = [
+  { title: "Movie", description: "bollywood", buttontext: "Play" },
+  { title: "News", description: "regional", buttontext: "Play" },
+  { title: "Songs", description: "bollywood", buttontext: "Resume" }
+];
+
+
+function Card({title,description,buttontext}){
 return(
-  <div className="user-profile">
-  <h3>Name: {name}</h3>
-  <h3>Age: {age}</h3>
-  <h3>Location: {location}</h3>
+  <div className="card">
+  <h3>{title}</h3>
+  <p>{description}</p>
+  <button>{buttontext}</button>
   </div>
 )
 }
 function App(){
   return(
     <main>
-<Welcome name ="Shivani"/>
-<UserProfile name="Shivani" age="27" location="Gwalior"/>
+      {cards.map((card,index)=>(
+        <Card 
+        key={index}
+        title={card.title}
+        description={card.description}
+        buttontext={card.buttontext}
+        />
+      ))}
+      {/* <Card title="Movie"description="bollywood" buttontext="Play"/>
+      <Card title="News"description="regional" buttontext="Play"/>
+      <Card title="Songs"description="bollywood" buttontext="Resume"/> */}
 </main>
   )
 }
