@@ -1,34 +1,27 @@
-const cards = [
-  { title: "Movie", description: "bollywood", buttontext: "Play" },
-  { title: "News", description: "regional", buttontext: "Play" },
-  { title: "Songs", description: "bollywood", buttontext: "Resume" }
-];
 
-
-function Card({title,description,buttontext}){
-return(
-  <div className="card">
-  <h3>{title}</h3>
-  <p>{description}</p>
-  <button>{buttontext}</button>
-  </div>
-)
-}
-function App(){
-  return(
-    <main>
-      {cards.map((card,index)=>(
-        <Card 
-        key={index}
-        title={card.title}
-        description={card.description}
-        buttontext={card.buttontext}
-        />
+function ProductList({ products }) {
+  return (
+    <div>
+      {products.map((product, index) => (
+        <ProductItem name={product.name} price={product.price} key={index} />
       ))}
-      {/* <Card title="Movie"description="bollywood" buttontext="Play"/>
-      <Card title="News"description="regional" buttontext="Play"/>
-      <Card title="Songs"description="bollywood" buttontext="Resume"/> */}
-</main>
+    </div>
   )
 }
-ReactDOM.render(<App  />, document.getElementById("root"));
+
+function ProductItem({ name, price }) {
+  return (
+    <div className="product">
+      <h3>Name of the product: {name}</h3>
+      <h3>Price of the product: {price}</h3>
+    </div>
+  )
+}
+function App() {
+  return (
+    <main>
+      <ProductList products={[{ name: "Shoes", price: 100 }, { name: "Bag", price: 50 }]} />
+    </main>
+  )
+}
+ReactDOM.render(<App />, document.getElementById("root"));
