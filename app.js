@@ -1,21 +1,21 @@
 /*
- Exercise: Build a Counter Component
+Exercise: Toggle Component
 Goal:
-Create a button that increases the count every time it's clicked.
+Clicking the button should toggle between: on <-> off
 */
 
 const { useState } = React;
 
-function Counter(){
-  const [count, setCount] = useState(0);
-  function handleClick(){
-    setCount(count+1);
-  }
+function Toggle(){
+const [isOn, setIsOn] = useState(true);
+function handleToggle(){
+ setIsOn(!isOn);
+}
   return(
-    <div>
-      <h2>Count: {count}</h2>
-      <button onClick={handleClick}>Increase Count</button>
-    </div>
+   <div>
+    <h2>{isOn? "On":"Off"}</h2>
+    <button onClick={handleToggle}>Toggle</button>
+   </div>
   )
 }
 
@@ -23,8 +23,8 @@ function Counter(){
 function App() {
   return (
     <main>
-<h1>Counter App</h1>
-<Counter/>
+<h1>Toggle App</h1>
+<Toggle/>
     </main>
 
   )
