@@ -1,25 +1,36 @@
 /*
- Requirements:
-Show an input field to type a name.
+ Problem Statement:
+Create a Counter component with:
 
-As the user types, display:
+A number displayed on screen
 
-"Hello, [name]"
-(e.g., if the user types Shivani, it shows Hello, Shivani)
+A + button to increment
 
-If the input is empty, show a default message:
+A - button to decrement
 
-"Please enter your name"
+You’ll use:
+
+useState to track the count
+
+onClick to trigger events
 */
 
 const { useState } = React;
 
-function Form(){
-  const [name, setName]=useState('');
+function Counter(){
+  const [counter,setCounter] = useState(0);
+
+  function incrementHandler(){
+    setCounter(counter+1);
+  }
+  function decrementCounter(){
+    setCounter(counter-1);
+  }
   return(
     <div>
-      <h3>{name.trim()===''?"Please enter your name":"Hello "+name}</h3>
-      <input type="text" value={name} onChange={(e)=>{setName(e.target.value)}}/>
+      <h3>Current count: {counter}</h3>
+    <button onClick={incrementHandler}>Increment</button>
+    <button onClick={decrementCounter}>Decrement</button>
     </div>
   )
 }
@@ -27,7 +38,7 @@ function Form(){
 function App() {
   return (
     <main>
- <Form/>
+<Counter/>
     </main>
 
   )
