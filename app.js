@@ -1,26 +1,13 @@
-
-function ProductList({ products }) {
+function StatusMessage({ isLoggedIn }) {
   return (
-    <div>
-      {products.map((product, index) => (
-        <ProductItem name={product.name} price={product.price} key={index} />
-      ))}
-    </div>
+    <h3>{isLoggedIn ? "Welcome Back" : "Please Login"}</h3>
   )
 }
 
-function ProductItem({ name, price }) {
-  return (
-    <div className="product">
-      <h3>Name of the product: {name}</h3>
-      <h3>Price of the product: {price}</h3>
-    </div>
-  )
-}
 function App() {
   return (
     <main>
-      <ProductList products={[{ name: "Shoes", price: 100 }, { name: "Bag", price: 50 }]} />
+      <StatusMessage isLoggedIn={false} />
     </main>
   )
 }
