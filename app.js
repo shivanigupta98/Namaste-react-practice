@@ -1,41 +1,33 @@
 /*
-Goal:
-Build a ThemeToggle component that:
+ Requirements:
+Show an input field to type a name.
 
-Shows current theme: Light Mode or Dark Mode
+As the user types, display:
 
-Button toggles between the two themes
+"Hello, [name]"
+(e.g., if the user types Shivani, it shows Hello, Shivani)
 
-Text and background color should change based on the theme
+If the input is empty, show a default message:
+
+"Please enter your name"
 */
 
 const { useState } = React;
 
-function ThemeToggle() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
-  function handleClick() {
-    setIsDarkMode(!isDarkMode);
-  }
-  const themeStyles = {
-    backgroundColor: isDarkMode ? "black" : "white",
-    color: isDarkMode ? "white" : "black",
-    padding: "20px",
-    height:"100vh"
-  }
-  return (
-    <div style={themeStyles} >
-      <h2>{isDarkMode ? "Dark Mode" : "Light Mode"}</h2>
-      <button onClick={handleClick}>Switch to {isDarkMode ? "Light Mode" : "Dark Mode"} </button>
+function Form(){
+  const [name, setName]=useState('');
+  return(
+    <div>
+      <h3>{name.trim()===''?"Please enter your name":"Hello "+name}</h3>
+      <input type="text" value={name} onChange={(e)=>{setName(e.target.value)}}/>
     </div>
   )
 }
 
-
 function App() {
   return (
     <main>
-      <h1>Toggle App</h1>
-      <ThemeToggle />
+ <Form/>
     </main>
 
   )
