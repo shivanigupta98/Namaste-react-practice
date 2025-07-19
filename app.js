@@ -1,38 +1,36 @@
 /*
-Create a Container component
+Build a Layout component
 
-Takes children inside a styled box
+Reusable layout with a header, content, and footer area
 
-Wrap any content with it like:
-<Container>
-  <p>This is inside the container</p>
-</Container>
+Accepts children for the content slot
 */
 
-function Container({children}){
-  return(
-    <div style = {{
-      border: '2px solid #ccc',
-      padding: '16px',
-      borderRadius: '8px',
-      backgroundColor: '#f9f9f9',
-      margin: '16px 0'
-    }}>{children}
+function Layout({ children }) {
+  return (
+    <div style={{ border: '2px solid #ddd', borderRadius: '8px', padding: '16px', margin: '16px' }}>
+      <header style={{ backgroundColor: '#eee', padding: '10px' }}>
+        <h2>Site Header</h2>
+      </header>
+
+      <main style={{ padding: '10px' }}>
+        {children}
+      </main>
+
+      <footer style={{ backgroundColor: '#eee', padding: '10px', marginTop: '16px' }}>
+        <p>&copy; 2025 My Website</p>
+      </footer>
     </div>
-  )
+  );
 }
+
 
 function App() {
   return (
-    <main>
-   <Container>
-    <h2>This is the container</h2>
-    <p>Welcome</p>
-   </Container>
-   <Container>
-    <button>Click me</button>
-   </Container>
-    </main>
+   <Layout>
+      <h3>Welcome to the Homepage!</h3>
+      <p>This is the main content area.</p>
+    </Layout>
   )
 }
 ReactDOM.render(<App />, document.getElementById("root"));
