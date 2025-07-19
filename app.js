@@ -1,36 +1,32 @@
 /*
-Build a Layout component
-
-Reusable layout with a header, content, and footer area
-
-Accepts children for the content slot
+ Exercise: Build a Counter Component
+Goal:
+Create a button that increases the count every time it's clicked.
 */
 
-function Layout({ children }) {
-  return (
-    <div style={{ border: '2px solid #ddd', borderRadius: '8px', padding: '16px', margin: '16px' }}>
-      <header style={{ backgroundColor: '#eee', padding: '10px' }}>
-        <h2>Site Header</h2>
-      </header>
+const { useState } = React;
 
-      <main style={{ padding: '10px' }}>
-        {children}
-      </main>
-
-      <footer style={{ backgroundColor: '#eee', padding: '10px', marginTop: '16px' }}>
-        <p>&copy; 2025 My Website</p>
-      </footer>
+function Counter(){
+  const [count, setCount] = useState(0);
+  function handleClick(){
+    setCount(count+1);
+  }
+  return(
+    <div>
+      <h2>Count: {count}</h2>
+      <button onClick={handleClick}>Increase Count</button>
     </div>
-  );
+  )
 }
 
 
 function App() {
   return (
-   <Layout>
-      <h3>Welcome to the Homepage!</h3>
-      <p>This is the main content area.</p>
-    </Layout>
+    <main>
+<h1>Counter App</h1>
+<Counter/>
+    </main>
+
   )
 }
 ReactDOM.render(<App />, document.getElementById("root"));
