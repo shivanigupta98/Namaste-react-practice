@@ -1,55 +1,53 @@
 /*
-Goal:
-Create a React component that displays a timer that:
+Goal
+Create a React component that:
 
-Starts counting automatically when the component mounts.
+Uses useEffect to fetch data from JSONPlaceholder
 
-Increases the count by 1 every second (1000ms).
+Stores data using useState
 
-Provides a button to stop the timer.
+Displays the fetched data
 
-🔧 Requirements:
-Use useState to manage the seconds counter.
-
-Use useEffect to start the timer using setInterval when the component mounts.
-
-Add a "Stop Timer" button that clears the interval when clicked.
-
-Optional bonus: Add a "Reset" button that sets seconds back to 0 and restarts the timer.
+Handles loading state
 */
 
 const { useState, useEffect } = React;
 
-function Timer() {
-  const [timer, setTimer] = useState(0);
-  const [intervalId, setIntervalId] = useState(null);
+function PostList(){
+const [posts, setPosts] = useState([]);
+const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      setTimer(prev => prev + 1);
-    }, 1000);
-    setIntervalId(id);
-    return () => clearInterval(id)
-  }, []);
+useEffect(()=>{
+  fetch("https://jsonplaceholder.typicode.com/posts")
+  .then(res=>res.json())
+  .then((data)=>{
+    setPosts(data);
+    setLoading(false);
+  })
+  .catch((error=>{
+    console.error("Error while fetching posts",error);
+    setLoading(false);
+  }))
+},[]);
 
-  function stopTimer() {
-    clearInterval(intervalId);
-  }
-  function resetTimer() {
-    clearInterval(intervalId);
-    setTimer(0);
-    const id = setInterval(() => {
-      setTimer(prev => prev + 1);
-    }, 1000)
-    setIntervalId(id);
-  }
-  return (
-    <div>
-      <p>Timer: {timer} seconds</p>
-      <button onClick={stopTimer}>Stop Timer</button>
-      <button onClick={resetTimer}>Reset Button</button>
-    </div>
-  )
+if(loading){
+  return <h2>Posts Loading....</h2>;
 }
 
-ReactDOM.render(<Timer />, document.getElementById("root"));
+return(
+  <div>
+    <h2>Post from API</h2>
+    <ul>
+      {posts.slice(0,10).map((post)=>(
+        <li key={post.id}>
+          <strong>{post.title}</strong>
+          <p>{post.body}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+)
+
+}
+
+ReactDOM.render(<PostList />, document.getElementById("root"));
