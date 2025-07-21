@@ -1,46 +1,55 @@
 /*
- Problem Statement:
-Create a Counter component with:
+Goal:
+Create a React component that displays a timer that:
 
-A number displayed on screen
+Starts counting automatically when the component mounts.
 
-A + button to increment
+Increases the count by 1 every second (1000ms).
 
-A - button to decrement
+Provides a button to stop the timer.
 
-You’ll use:
+🔧 Requirements:
+Use useState to manage the seconds counter.
 
-useState to track the count
+Use useEffect to start the timer using setInterval when the component mounts.
 
-onClick to trigger events
+Add a "Stop Timer" button that clears the interval when clicked.
+
+Optional bonus: Add a "Reset" button that sets seconds back to 0 and restarts the timer.
 */
 
-const { useState } = React;
+const { useState, useEffect } = React;
 
-function Counter(){
-  const [counter,setCounter] = useState(0);
+function Timer() {
+  const [timer, setTimer] = useState(0);
+  const [intervalId, setIntervalId] = useState(null);
 
-  function incrementHandler(){
-    setCounter(counter+1);
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTimer(prev => prev + 1);
+    }, 1000);
+    setIntervalId(id);
+    return () => clearInterval(id)
+  }, []);
+
+  function stopTimer() {
+    clearInterval(intervalId);
   }
-  function decrementCounter(){
-    setCounter(counter-1);
+  function resetTimer() {
+    clearInterval(intervalId);
+    setTimer(0);
+    const id = setInterval(() => {
+      setTimer(prev => prev + 1);
+    }, 1000)
+    setIntervalId(id);
   }
-  return(
+  return (
     <div>
-      <h3>Current count: {counter}</h3>
-    <button onClick={incrementHandler}>Increment</button>
-    <button onClick={decrementCounter}>Decrement</button>
+      <p>Timer: {timer} seconds</p>
+      <button onClick={stopTimer}>Stop Timer</button>
+      <button onClick={resetTimer}>Reset Button</button>
     </div>
   )
 }
 
-function App() {
-  return (
-    <main>
-<Counter/>
-    </main>
-
-  )
-}
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<Timer />, document.getElementById("root"));
