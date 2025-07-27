@@ -1,32 +1,39 @@
-const { useState, useEffect } = React;
+/*
+Feedbback form
+*/
 
-function MouseTracker() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+const { useState } = React;
 
-  useEffect(() => {
-    function handleMouseMove(event) {
-      setPosition({
-        x: event.clientX,
-        y: event.clientY
-      });
-    }
-
-    // Add the event listener
-    window.addEventListener("mousemove", handleMouseMove);
-
-    // Cleanup when component unmounts
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []); // Empty array = run once when mounted
+function FeedbackForm({ }) {
+  const [name, setName] = useState("");
+  const [feedback, setFeedback] = useState("");
+  function SubmitHandler(e) {
+      e.preventDefault();
+    console.log("Name " + name + ", Feedback: " + feedback);
+    setName("");
+    setFeedback("");
+   
+  }
+ 
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Mouse Tracker</h2>
-      <p>X: {position.x}</p>
-      <p>Y: {position.y}</p>
-    </div>
-  );
+    <main>
+      <form onSubmit={SubmitHandler}>
+        <p>Name:</p>
+        <input id="name" type="text"value={name} onChange={(e) => { setName(e.target.value) }}></input>
+        <br />
+        <p>Feedback:</p>
+        <textarea id="feedback" value={feedback} onChange={(e) => setFeedback(e.target.value)}></textarea>
+        <br />
+        <button disabled={name === "" || feedback === ""}>Submit</button>
+      </form>
+    </main>
+  )
+}
+function App() {
+  return (
+    <div><FeedbackForm /></div>
+  )
 }
 
-ReactDOM.render(<MouseTracker />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));
