@@ -1,38 +1,68 @@
 /*
-Feedbback form
+Celsius-Fahrenheit scale
 */
 
 const { useState } = React;
 
-function FeedbackForm({ }) {
-  const [name, setName] = useState("");
-  const [feedback, setFeedback] = useState("");
-  function SubmitHandler(e) {
-      e.preventDefault();
-    console.log("Name " + name + ", Feedback: " + feedback);
-    setName("");
-    setFeedback("");
-   
-  }
- 
+function TemperatureConverter() {
+  const [ temp, setTemp ] = useState("");
+  const [ scale, setScale ] = useState('C');
 
-  return (
-    <main>
-      <form onSubmit={SubmitHandler}>
-        <p>Name:</p>
-        <input id="name" type="text"value={name} onChange={(e) => { setName(e.target.value) }}></input>
-        <br />
-        <p>Feedback:</p>
-        <textarea id="feedback" value={feedback} onChange={(e) => setFeedback(e.target.value)}></textarea>
-        <br />
-        <button disabled={name === "" || feedback === ""}>Submit</button>
-      </form>
-    </main>
+  return(
+    <div>
+    <CelsiusInput temp={scale === 'C' ? temp : toCelsius(temp)} onTempChange={(value) => {
+        setTemp(value);
+        setScale('C');
+      }} />
+      <FahrenheitInput temp={scale === 'F' ? temp : toFahrenheit(temp)}
+        onTempChange={(value) => {
+          setTemp(value);
+          setScale('F');
+        }}
+      />
+      </div>
   )
 }
+
+  function toCelsius(fahrenheit) {
+    return ((fahrenheit - 32) * 5) / 9;
+  }
+
+  function toFahrenheit(celsius) {
+    return (celsius * 9) / 5 + 32;
+  }
+
+
+function CelsiusInput({temp, onTempChange}) {
+  return(
+    <div>
+      <label>Celsius: </label>
+      <input 
+      type="number"
+      value={temp}
+      onChange={(e)=>{onTempChange(e.target.value)}} 
+      ></input>
+    </div>
+  )
+
+}
+
+function FahrenheitInput({temp, onTempChange}) {
+return(
+    <div>
+      <label>Fahrenheit: </label>
+      <input 
+      type="number"
+      value={temp}
+      onChange={(e)=>{onTempChange(e.target.value)}} 
+      ></input>
+    </div>
+  )
+}
+
 function App() {
   return (
-    <div><FeedbackForm /></div>
+    <div><TemperatureConverter/></div>
   )
 }
 
